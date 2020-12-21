@@ -14,6 +14,7 @@
 - `getValueOfInputField` to get value of input field
 - split `verifyPublishAndTrash` into separate functions.
 - `addProductToOrder( orderId, productName )` component which adds the provided productName to the passed in orderId
+- `createCoupon( couponAmount )` component which accepts a coupon amount string (it defaults to 5) and creates a basic coupon. Returns the generated coupon code.
 
 ## Changes
 
