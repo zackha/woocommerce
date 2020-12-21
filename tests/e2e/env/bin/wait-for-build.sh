@@ -14,17 +14,17 @@ printf "Testing URL: $WP_BASE_URL\n\n"
 while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${WP_BASE_URL}/?pagename=ready)" != "200" ]]
 
 do
-  echo "$(date) - Docker container is still being built"
+  echo "$(date) - Waiting for Testing URL Ready page"
   sleep ${DELAY_SEC}
 
   ((count++))
 
   if [[ $count -gt ${MAX_ATTEMPTS} ]]; then
-  	echo "$(date) - Docker container couldn't be built"
+  	echo "$(date) - Testing URL not Ready"
   	exit 1
   fi
 done
 
 if [[ $count -gt 0 ]]; then
-  echo "$(date) - Docker container had been built successfully"
+  echo "$(date) - Testing URL is Ready"
 fi
