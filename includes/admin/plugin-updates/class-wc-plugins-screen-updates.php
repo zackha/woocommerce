@@ -42,14 +42,8 @@ class WC_Plugins_Screen_Updates extends WC_Plugin_Updates {
 	 * @param stdClass $response Plugin update response.
 	 */
 	public function in_plugin_update_message( $args, $response ) {
-		$version_type = Constants::get_constant( 'WC_SSR_PLUGIN_UPDATE_RELEASE_VERSION_TYPE' );
-		if ( ! is_string( $version_type ) ) {
-			$version_type = 'none';
-		}
-
 		$this->new_version            = $response->new_version;
 		$this->upgrade_notice         = $this->get_upgrade_notice( $response->new_version );
-		$this->major_untested_plugins = $this->get_untested_plugins( $response->new_version, $version_type );
 
 		$current_version_parts = explode( '.', Constants::get_constant( 'WC_VERSION' ) );
 		$new_version_parts     = explode( '.', $this->new_version );
@@ -57,15 +51,6 @@ class WC_Plugins_Screen_Updates extends WC_Plugin_Updates {
 		// If user has already moved to the minor version, we don't need to flag up anything.
 		if ( version_compare( $current_version_parts[0] . '.' . $current_version_parts[1], $new_version_parts[0] . '.' . $new_version_parts[1], '=' ) ) {
 			return;
-		}
-
-		if ( ! empty( $this->major_untested_plugins ) ) {
-			$this->upgrade_notice .= $this->get_extensions_inline_warning_major();
-		}
-
-		if ( ! empty( $this->major_untested_plugins ) ) {
-			$this->upgrade_notice .= $this->get_extensions_modal_warning();
-			add_action( 'admin_print_footer_scripts', array( $this, 'plugin_screen_modal_js' ) );
 		}
 
 		echo apply_filters( 'woocommerce_in_plugin_update_message', $this->upgrade_notice ? '</p>' . wp_kses_post( $this->upgrade_notice ) . '<p class="dummy">' : '' ); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
@@ -136,8 +121,11 @@ class WC_Plugins_Screen_Updates extends WC_Plugin_Updates {
 
 	/**
 	 * JS for the modal window on the plugins screen.
+	 *
+	 * @deprecated 4.9.2
 	 */
 	public function plugin_screen_modal_js() {
+		wc_deprecated_function( 'WC_Plugins_Screen_Updates::plugin_screen_modal_js', '4.9.2', '' );
 		?>
 		<script>
 			( function( $ ) {

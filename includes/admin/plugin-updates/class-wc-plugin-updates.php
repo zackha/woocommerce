@@ -99,9 +99,11 @@ class WC_Plugin_Updates {
 	/**
 	 * Get the inline warning notice for major version updates.
 	 *
+	 * @deprecated 4.9.2
 	 * @return string
 	 */
 	protected function get_extensions_inline_warning_major() {
+		wc_deprecated_function( 'WC_Plugin_Updates::get_extensions_inline_warning_major', '4.9.2', '' );
 		$upgrade_type  = 'major';
 		$plugins       = $this->major_untested_plugins;
 		$version_parts = explode( '.', $this->new_version );
@@ -122,9 +124,11 @@ class WC_Plugin_Updates {
 	/**
 	 * Get the warning notice for the modal window.
 	 *
+	 * @deprecated 4.9.2
 	 * @return string
 	 */
 	protected function get_extensions_modal_warning() {
+		wc_deprecated_function( 'WC_Plugin_Updates::get_extensions_modal_warning', '4.9.2', '' );
 		$version_parts = explode( '.', $this->new_version );
 		$new_version   = $version_parts[0] . '.0';
 		$plugins       = $this->major_untested_plugins;

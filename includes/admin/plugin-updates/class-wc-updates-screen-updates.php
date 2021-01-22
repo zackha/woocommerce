@@ -28,8 +28,11 @@ class WC_Updates_Screen_Updates extends WC_Plugin_Updates {
 
 	/**
 	 * Show a warning message on the upgrades screen if the user tries to upgrade and has untested plugins.
+	 *
+	 * @deprecated 4.9.2
 	 */
 	public function update_screen_modal() {
+		wc_deprecated_function( 'WC_Updates_Screen_Updates::update_screen_modal', '4.9.2', '' );
 		$updateable_plugins = get_plugin_updates();
 		if ( empty( $updateable_plugins['woocommerce/woocommerce.php'] )
 			|| empty( $updateable_plugins['woocommerce/woocommerce.php']->update )
@@ -39,17 +42,15 @@ class WC_Updates_Screen_Updates extends WC_Plugin_Updates {
 
 		$this->new_version            = wc_clean( $updateable_plugins['woocommerce/woocommerce.php']->update->new_version );
 		$this->major_untested_plugins = $this->get_untested_plugins( $this->new_version, 'major' );
-
-		if ( ! empty( $this->major_untested_plugins ) ) {
-			echo $this->get_extensions_modal_warning(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
-			$this->update_screen_modal_js();
-		}
 	}
 
 	/**
 	 * JS for the modal window on the updates screen.
+	 *
+	 * @deprecated 4.9.2
 	 */
 	protected function update_screen_modal_js() {
+		wc_deprecated_function( 'WC_Updates_Screen_Updates::update_screen_modal_js', '4.9.2', '' );
 		?>
 		<script>
 			( function( $ ) {
