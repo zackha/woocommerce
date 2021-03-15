@@ -1902,6 +1902,25 @@ class WC_Product extends WC_Abstract_Legacy_Product {
 	}
 
 	/**
+	 * Returns the main product image.
+	 *
+	 * @return string
+	 */
+	public function get_main_image() {
+		$attachment = '';
+		if ( $this->get_image_id() ) {
+			$attachment = wp_get_attachment_image_src( $this->get_image_id(), 'full' );
+		} elseif ( $this->get_parent_id() ) {
+			$parent_product = wc_get_product( $this->get_parent_id() );
+			if ( $parent_product ) {
+				$attachment = $parent_product->get_first_image();
+			}
+		}
+
+		return current( $attachment );
+	}
+
+	/**
 	 * Returns the product shipping class SLUG.
 	 *
 	 * @return string
