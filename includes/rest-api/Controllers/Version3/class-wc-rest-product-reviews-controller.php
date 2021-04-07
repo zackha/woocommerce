@@ -691,6 +691,14 @@ class WC_REST_Product_Reviews_Controller extends WC_REST_Controller {
 		if ( in_array( 'product_id', $fields, true ) ) {
 			$data['product_id'] = (int) $review->comment_post_ID;
 		}
+
+		$product = wc_get_product( $review->comment_post_ID );
+		$data['product']['id'] = $product ? $product->get_id() : null;
+		$data['product']['name'] = $product ? $product->get_name() : null;
+		$data['product']['sku'] = $product ? $product->get_sku() : null;
+		$data['product']['image'] = $product ? $product->get_main_image() : null;
+		$data['product']['permalink'] = $product ? $product->get_permalink() : null;
+
 		if ( in_array( 'status', $fields, true ) ) {
 			$data['status'] = $this->prepare_status_response( (string) $review->comment_approved );
 		}
