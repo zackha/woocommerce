@@ -691,14 +691,14 @@ class WC_REST_Product_Reviews_Controller extends WC_REST_Controller {
 		if ( in_array( 'product_id', $fields, true ) ) {
 			$data['product_id'] = (int) $review->comment_post_ID;
 		}
-
-		$product = wc_get_product( $review->comment_post_ID );
-		$data['product']['id'] = $product ? $product->get_id() : null;
-		$data['product']['name'] = $product ? $product->get_name() : null;
-		$data['product']['sku'] = $product ? $product->get_sku() : null;
-		$data['product']['image'] = $product ? $product->get_main_image() : null;
-		$data['product']['permalink'] = $product ? $product->get_permalink() : null;
-
+		if ( in_array( 'product', $fields, true ) ) {
+			$product = wc_get_product( $review->comment_post_ID );
+			$data['product']['id'] = $product ? $product->get_id() : null;
+			$data['product']['name'] = $product ? $product->get_name() : null;
+			$data['product']['sku'] = $product ? $product->get_sku() : null;
+			$data['product']['image'] = $product ? $product->get_main_image() : null;
+			$data['product']['permalink'] = $product ? $product->get_permalink() : null;
+		}
 		if ( in_array( 'status', $fields, true ) ) {
 			$data['status'] = $this->prepare_status_response( (string) $review->comment_approved );
 		}
@@ -857,6 +857,43 @@ class WC_REST_Product_Reviews_Controller extends WC_REST_Controller {
 					'description' => __( 'Unique identifier for the product that the review belongs to.', 'woocommerce' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
+				),
+				'product'             => array(
+					'description' => __( 'Details of the product that the review belongs to', 'woocommerce' ),
+					'type'        => 'object',
+					'context'     => array( 'view' ),
+					'properties'  => array(
+						'id'           => array(
+							'description' => __( 'Product ID.', 'woocommerce' ),
+							'type'        => 'integer',
+							'context'     => array( 'view', 'edit' ),
+							'readonly'    => true,
+						),
+						'name'         => array(
+							'description' => __( 'Product name.', 'woocommerce' ),
+							'type'        => 'mixed',
+							'context'     => array( 'view', 'edit' ),
+						),
+						'sku'          => array(
+							'description' => __( 'Product SKU.', 'woocommerce' ),
+							'type'        => 'string',
+							'context'     => array( 'view', 'edit' ),
+							'readonly'    => true,
+						),
+						'image'        => array(
+							'description' => __( 'Product image.', 'woocommerce' ),
+							'type'        => 'string',
+							'context'     => array( 'view', 'edit' ),
+							'readonly'    => true,
+						),
+						'permalink'             => array(
+							'description' => __( 'Product URL.', 'woocommerce' ),
+							'type'        => 'string',
+							'format'      => 'uri',
+							'context'     => array( 'view', 'edit' ),
+							'readonly'    => true,
+						),
+					),
 				),
 				'status'           => array(
 					'description' => __( 'Status of the review.', 'woocommerce' ),
