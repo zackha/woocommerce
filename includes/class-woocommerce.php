@@ -512,6 +512,10 @@ final class WooCommerce {
 
 		if ( $this->is_request( 'admin' ) ) {
 			include_once WC_ABSPATH . 'includes/admin/class-wc-admin.php';
+		} elseif ( $this->is_rest_api_request() ) {
+			// We need to be able to fetch menu items from the Rest API so they
+			// can be added to Gutenberg's Navigation block.
+			include_once WC_ABSPATH . 'includes/admin/class-wc-admin-customize.php';
 		}
 
 		if ( $this->is_request( 'frontend' ) ) {
