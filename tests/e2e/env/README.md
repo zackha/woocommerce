@@ -167,7 +167,7 @@ To implement the Slackbot in your CI:
 - Create a [Slackbot App](https://slack.com/help/articles/115005265703-Create-a-bot-for-your-workspace)
 - Give the app the following permissions:
   - `channel:join`
-  - `chat:write`
+  - `chats:write`
   - `files:write`
   - `incoming-webhook`
 - Add the app to your channel
