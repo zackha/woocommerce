@@ -235,21 +235,33 @@ export const withRestApi = {
 			return;
 		}
 
-		for ( let s = 0; s < settings.length; s++ ) {
+		const settingUpdates = settings.map(async (setting) => {
 			// The rest api doesn't allow selects to be set to ''.
-			if ( settings[s].type == 'select' && settings[s].default == '' ) {
-				continue;
+			if (setting.type == 'select' && setting.default == '') {
+				return false;
 			}
 			const defaultSetting = {
 				group_id: settingsGroup,
-				id: settings[s].id,
-				value: settings[s].default,
+				id: setting.id,
+				value: setting.default,
 			};
 
-			const response = await settingsClient.update( settingsGroup, defaultSetting.id, defaultSetting );
-			// Multi-selects have a default '' but return an empty [].
-			if ( settings[s].type != 'multiselect' ) {
-				expect( response.value ).toBe( defaultSetting.value );
+			return {
+				updateRequest: await settingsClient.update(
+					settingsGroup,
+					defaultSetting.id,
+					defaultSetting
+				),
+				setting,
+			};
+		});
+		const responses = await Promise.all(settingUpdates);
+		for (let s = 0; s < responses.length; s++) {
+			const response = responses[s];
+			if (response !== false && response.setting.type != 'multiselect') {
+				expect(response.updateRequest.value).toBe(
+					response.setting.default
+				);
 			}
 		}
 	},
