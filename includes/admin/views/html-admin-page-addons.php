@@ -13,6 +13,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $current_section_name = __( 'Browse Categories', 'woocommerce' );
 
+/**
+ * Determine which class should be used for a rating star:
+ * - golden
+ * - half-filled (50/50 golden and gray)
+ * - gray
+ *
+ * Consider ratings from 3.0 to 4.0 as an example
+ * 3.0 will produce 3 stars
+ * 3.1 to 3.5 will produce 3 stars and a half star
+ * 3.6 to 4.0 will product 4 stars
+ *
+ * @param float $rating Rating of a product.
+ * @param int   $index  Index of a star in a row.
+ *
+ * @return string CSS class to use.
+ */
+function wccom_get_star_class( $rating, $index ) {
+	if ( $rating >= $index ) {
+		// Rating more that current star to show.
+		return 'fill';
+	} else if (
+		abs( $index - 1 - floor( $rating ) ) < 0.0000001 &&
+		0 < ( $rating - floor( $rating ) )
+	) {
+		// For rating more than x.0 and less than x.5 or equal it will show a half star.
+		return 50 >= floor( ( $rating - floor( $rating ) ) * 100 )
+			? 'half-fill'
+			: 'fill';
+	}
+
+	// Don't show a golden star otherwise.
+	return 'no-fill';
+}
+
 ?>
 <div class="woocommerce wc-addons-wrap">
 	<h1 class="screen-reader-text"><?php esc_html_e( 'Marketplace', 'woocommerce' ); ?></h1>
@@ -111,21 +145,53 @@ $current_section_name = __( 'Browse Categories', 'woocommerce' );
 						?>
 						<li class="product">
 							<div class="product-details">
-								<?php if ( ! empty( $addon->image ) ) : ?>
-									<span class="product-img-wrap"><img src="<?php echo esc_url( $addon->image ); ?>" /></span>
+								<?php if ( ! empty( $addon->icon ) ) : ?>
+									<span class="product-img-wrap">
+										<?php /* Show an icon if it exists */ ?>
+										<img src="<?php echo esc_url( $addon->icon ); ?>" />
+									</span>
 								<?php endif; ?>
 								<a href="<?php echo esc_url( WC_Admin_Addons::add_in_app_purchase_url_params( $addon->link ) ); ?>">
 									<h2><?php echo esc_html( $addon->title ); ?></h2>
 								</a>
+								<?php if ( ! empty( $addon->vendor_name ) && ! empty( $addon->vendor_url ) ) : ?>
+									<div class="product-developed-by">
+										<?php
+											printf(
+												/* translators: %s vendor link */
+												esc_html__( 'Developed by %s', 'woocommerce' ),
+												sprintf(
+													'<a class="product-vendor-link" href="%1$s" target="_blank">%2$s</a>',
+													esc_url_raw( $addon->vendor_url ),
+													wp_kses_post( $addon->vendor_name )
+												)
+											);
+										?>
+									</div>
+								<?php endif; ?>
 								<p><?php echo wp_kses_post( $addon->excerpt ); ?></p>
 							</div>
 							<div class="product-footer">
-								<?php if ( '&#36;0.00' === $addon->price ) : ?>
-									<span class="price"><?php esc_html_e( 'Free', 'woocommerce' ); ?></span>
-								<?php else : ?>
-									<span class="price"><?php echo wp_kses_post( $addon->price ); ?></span>
-									<span class="price_suffix"><?php esc_html_e( 'per year', 'woocommerce' ); ?></span>
-								<?php endif; ?>
+								<div class="product-price-and-reviews-container">
+									<div class="product-price-block">
+										<?php if ( '&#36;0.00' === $addon->price ) : ?>
+											<span class="price"><?php esc_html_e( 'Free', 'woocommerce' ); ?></span>
+										<?php else : ?>
+											<span class="price"><?php echo wp_kses_post( $addon->price ); ?></span>
+											<span class="price-suffix"><?php esc_html_e( 'per year', 'woocommerce' ); ?></span>
+										<?php endif; ?>
+									</div>
+									<?php if ( ! empty( $addon->reviews_count ) && ! empty( $addon->rating ) ) : ?>
+										<?php /* Show rating and the number of reviews */ ?>
+										<div class="product-reviews-block">
+											<?php for ( $index = 1; $index <= 5; ++$index ) : ?>
+												<?php $rating_star_class = 'product-rating-star product-rating-star__' . wccom_get_star_class( $addon->rating, $index ); ?>
+												<div class="<?php echo esc_attr( $rating_star_class ); ?>"></div>
+											<?php endfor; ?>
+											<span class="product-reviews-count">(<?php echo wp_kses_post( $addon->reviews_count ); ?>)</span>
+										</div>
+									<?php endif; ?>
+								</div>
 								<a class="button" href="<?php echo esc_url( WC_Admin_Addons::add_in_app_purchase_url_params( $addon->link ) ); ?>">
 									<?php esc_html_e( 'View details', 'woocommerce' ); ?>
 								</a>
