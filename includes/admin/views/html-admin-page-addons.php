@@ -80,14 +80,14 @@ $current_section_name = __( 'Browse Categories', 'woocommerce' );
 			<?php endif; ?>
 			<?php if ( '_featured' !== $current_section && $addons ) : ?>
 				<?php if ( 'shipping_methods' === $current_section ) : ?>
-					<div class="addons-shipping-methods">
-						<?php WC_Admin_Addons::output_wcs_banner_block(); ?>
-					</div>
+					<!-- <div class="addons-shipping-methods"> -->
+						<?php // WC_Admin_Addons::output_wcs_banner_block(); // TODO: do something with it. ?>
+					<!-- </div> -->
 				<?php endif; ?>
 				<?php if ( 'payment-gateways' === $current_section ) : ?>
-					<div class="addons-shipping-methods">
-						<?php WC_Admin_Addons::output_wcpay_banner_block(); ?>
-					</div>
+					<!-- <div class="addons-shipping-methods"> -->
+						<?php // WC_Admin_Addons::output_wcpay_banner_block(); // TODO: do something with it. ?>
+					<!-- </div> -->
 				<?php endif; ?>
 				<ul class="products">
 					<?php foreach ( $addons as $addon ) : ?>
@@ -113,6 +113,7 @@ $current_section_name = __( 'Browse Categories', 'woocommerce' );
 							}
 						}
 						?>
+<<<<<<< HEAD
 						<li class="product">
 							<div class="product-details">
 								<?php if ( ! empty( $addon->icon ) ) : ?>
@@ -188,6 +189,9 @@ $current_section_name = __( 'Browse Categories', 'woocommerce' );
 								</a>
 							</div>
 						</li>
+=======
+						<?php WC_Admin_Addons::render_product_card( $addon ); ?>
+>>>>>>> Refactor product card to use with groups
 					<?php endforeach; ?>
 				</ul>
 			<?php endif; ?>
