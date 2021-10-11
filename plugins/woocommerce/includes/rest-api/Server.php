@@ -122,7 +122,6 @@ class Server {
 			'shipping-zone-methods'    => 'WC_REST_Shipping_Zone_Methods_V2_Controller',
 			'tax-classes'              => 'WC_REST_Tax_Classes_V2_Controller',
 			'taxes'                    => 'WC_REST_Taxes_V2_Controller',
-			'telemetry'                => 'WC_REST_Telemetry_V2_Controller',
 			'webhooks'                 => 'WC_REST_Webhooks_V2_Controller',
 			'webhook-deliveries'       => 'WC_REST_Webhook_Deliveries_V2_Controller',
 			'system-status'            => 'WC_REST_System_Status_V2_Controller',
@@ -169,7 +168,6 @@ class Server {
 			'shipping-zone-methods'    => 'WC_REST_Shipping_Zone_Methods_Controller',
 			'tax-classes'              => 'WC_REST_Tax_Classes_Controller',
 			'taxes'                    => 'WC_REST_Taxes_Controller',
-			'telemetry'                => 'WC_REST_Telemetry_Controller',
 			'webhooks'                 => 'WC_REST_Webhooks_Controller',
 			'system-status'            => 'WC_REST_System_Status_Controller',
 			'system-status-tools'      => 'WC_REST_System_Status_Tools_Controller',
@@ -179,6 +177,12 @@ class Server {
 			'data-continents'          => 'WC_REST_Data_Continents_Controller',
 			'data-countries'           => 'WC_REST_Data_Countries_Controller',
 			'data-currencies'          => 'WC_REST_Data_Currencies_Controller',
+		);
+	}
+
+	protected function get_telemetry_controllers() {
+		return array(
+			'tracker' => 'WC_REST_Telemetry_Controller',
 		);
 	}
 
