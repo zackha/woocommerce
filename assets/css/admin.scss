@@ -505,10 +505,11 @@
 				}
 
 				&.promoted {
+
 					.label {
 						align-items: center;
 						border-radius: 2px;
-						background: #DCDCDE;
+						background: #dcdcde;
 						display: flex;
 						flex-direction: row;
 						float: right;
@@ -519,8 +520,9 @@
 						right: 24px;
 						text-align: center;
 					}
+
 					h2 {
-						color: #2C3338;
+						color: #2c3338;
 					}
 				}
 
@@ -548,7 +550,6 @@
 					}
 				}
 			}
-
 
 			.product-footer {
 				align-items: center;
