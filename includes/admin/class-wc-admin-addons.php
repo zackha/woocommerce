@@ -32,8 +32,14 @@ class WC_Admin_Addons {
 				$headers['Authorization'] = 'Bearer ' . $auth['access_token'];
 			}
 
+			$parameter_string = '';
+			$country  = WC()->countries->get_base_country();
+			if ( ! empty( $country ) ) {
+				$parameter_string = '?' . http_build_query( array( 'country' => $country ) );
+			}
+
 			$raw_featured = wp_safe_remote_get(
-				'https://woocommerce.com/wp-json/wccom-extensions/1.0/featured',
+				'https://woocommerce.com/wp-json/wccom-extensions/1.0/featured' . $parameter_string,
 				array(
 					'headers'    => $headers,
 					'user-agent' => 'WooCommerce Addons Page',
