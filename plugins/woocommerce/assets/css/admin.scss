@@ -582,6 +582,7 @@
 					color: #1d2327; // Gray / Gray 90
 				}
 
+				&.featured,
 				&.promoted {
 					.label {
 						align-items: center;
@@ -589,13 +590,17 @@
 						background: #DCDCDE;
 						display: flex;
 						flex-direction: row;
-						float: right;
 						height: 20px;
 						justify-content: flex-end;
+						max-width: 58px;
 						padding: 3px 12px;
 						top: 28px;
 						right: 24px;
 						text-align: center;
+
+						&.promoted {
+							float: right;
+						}
 					}
 					h2 {
 						color: #2C3338;
