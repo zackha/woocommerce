@@ -47,7 +47,7 @@ beforeAll(async () => {
 
 	try {
 		// Update the ready page to prevent concurrent test runs
-		await updateReadyPageStatus('publish');
+		await updateReadyPageStatus('draft');
 		await trashExistingPosts();
 		await withRestApi.deleteAllProducts();
 		await withRestApi.deleteAllCoupons();
