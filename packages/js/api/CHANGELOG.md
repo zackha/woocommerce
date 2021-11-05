@@ -1,45 +1,7 @@
-# Unreleased
+# Changelog
 
-# 0.2.0
+This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Added
+---
 
-- Support for orders.
-
-## Changed
-
-- `delete()` now deletes products and coupons instead of moving to `trash`.
-
-# 0.1.2
-
-## Added
-
-- Support for the external product type.
-- Support for grouped product type.
-- Support for variable products and product variations.
-- Support for coupons.
-
-# 0.1.1
-
-## Breaking Changes
-
-- The `HTTPClientFactory` API was changed to make it easier to configure instances
-
-## Added
-
-- `HTTPClientFactory` methods `withIndexPermalinks()` and `withoutIndexPermalinks()` to enable/disable API pretty permalinks
-- Expanded properties of `AbstractProduct` model type
-- Added `list`, `read`, `update`, and `delete` operations for `SimpleProduct` repositories
-
-## Changes
-
-- Added a transformation layer between API responses and internal models
-
-## Fixed
-
-- issues that caused the factory creation to fail for SimpleProduct types
-- a bug with OAuth signature generation when using query parameters
-
-# 0.1.0
-
-- Initial/beta release
+[See legacy changelogs for previous versions](https://github.com/woocommerce/woocommerce/blob/77ccfc56ca5680f3bc1496d8b2f93befa28e1483/packages/js/api/CHANGELOG.md).

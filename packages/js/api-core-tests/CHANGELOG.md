@@ -1,8 +1,7 @@
-# 0.1.0
+# Changelog
 
-- Initial/beta release
+This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Added
-- Coupons API Tests
-- Refunds API Tests
-- Products API Tests
+---
+
+[See legacy changelogs for previous versions](https://github.com/woocommerce/woocommerce/blob/77ccfc56ca5680f3bc1496d8b2f93befa28e1483/packages/js/api-core-tests/CHANGELOG.md).
