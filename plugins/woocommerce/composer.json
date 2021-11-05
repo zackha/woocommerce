@@ -26,13 +26,11 @@
   },
   "require-dev": {
     "bamarni/composer-bin-plugin": "^1.4",
-    "yoast/phpunit-polyfills": "^1.0"
+    "yoast/phpunit-polyfills": "^1.0",
+    "automattic/jetpack-changelogger": "1.2"
   },
   "config": {
     "optimize-autoloader": true,
-    "platform": {
-      "php": "7.0"
-    },
     "preferred-install": {
         "woocommerce/action-scheduler": "dist",
         "woocommerce/woocommerce-rest-api": "dist",
@@ -54,7 +52,10 @@
     },
     "psr-0": {
       "Automattic\\WooCommerce\\Vendor\\": "lib/packages/"
-    }
+    },
+    "files": [
+			"../../tools/changelogger/PluginFormatter.php"
+		]
   },
   "autoload-dev": {
     "psr-4": {
@@ -116,6 +117,21 @@
     },
     "bamarni-bin": {
       "target-directory": "bin/composer"
-    }
+    },
+    "changelogger": {
+			"formatter": {
+				"class": "PluginFormatter"
+			},
+			"types": [
+				"Fix",
+				"Add",
+				"Update",
+				"Dev",
+				"Tweak",
+				"Performance",
+				"Enhancement"
+			],
+			"versioning": "wordpress"
+		}
   }
 }
