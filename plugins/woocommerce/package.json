@@ -10,7 +10,8 @@
   "license": "GPL-3.0+",
   "main": "Gruntfile.js",
   "config": {
-    "wp_org_slug": "woocommerce"
+    "wp_org_slug": "woocommerce",
+    "use_pnpm": true
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
